@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Budget Ticket "{{ ticket['number'] }}" {% endblock %} </h1>
+
+<form method="post">
+
+    <div class="col">
+        <div class="form-group">
+            <label for="actions">Budget <a href="{{ url_for('edit', id=ticket['id']) }}"><span class="badge badge-warning">Edit</span></a></label>
+            <a target="_blank" href="https://helpdesk.bis2bis.com.br/Ticket/Edit/{{ ticket['number'] }}">
+                <span class="badge badge-danger">Movie Desk</span>
+            </a>
+            <textarea name="actions" placeholder="Actions" rows="25" class="form-control">
+Ticket = {{ ticket['number'] }}
+
+Olá {{ ticket['manager'] }},
+
+Por gentileza enviar o orçamento abaixo:
+
+Descrição do serviço:
+{{ ticket['resume'] }}
+{% block hours %} {% set temp= {'hours': ticket['hours']} %} {% if temp.update({'hours': ticket['hours'].replace("#orcamento", "")}) %}{% endif %} {% if temp.hours|length > 0 %} {{ '\n' + temp.hours + '\n' }} {% endif %} {% endblock hours %}
+Segue orçamento.
+
+Tempo de produção: {{ tempo }} hora(s)
+Prazo de conclusão: {{ dias }} dias úteis
+
+Atenciosamente,
+
+Hernando de Paula Brasileiro
+            </textarea>
+        </div>
+    </div>
+
+</form>
+
+<hr>
+
+{% endblock %}

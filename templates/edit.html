@@ -1,0 +1,259 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<br />
+
+{% for category, message in get_flashed_messages(with_categories=true) %}
+    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>    
+{% endfor %}
+
+<form method="post">
+
+    <input type="hidden" name="description" value="{{ ticket['description'] }}"></input>
+
+    <div class="row">
+        <div class="col-2">
+            <div class="form-group">
+                <input type="text" name="number" placeholder="Number"
+                       class="form-control"
+                       value="{{ ticket['number'] }}">
+                </input>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <input type="date" name="dt_ticket" placeholder="Ticket Date"
+                       class="form-control"
+                       value="{{ ticket['dt_ticket'] }}">
+                </input>
+            </div>
+        </div>
+        <div class="col-7">
+            <div class="form-group">
+                <input type="text" name="subject" placeholder="Subject"
+                       class="form-control"
+                       value="{{ ticket['subject'] }}">
+                </input>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <input type="text" name="client" placeholder="Client"
+                       class="form-control"
+                       value="{{ ticket['client'] }}">
+                </input>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <input type="text" name="link" placeholder="Link"
+                       class="form-control"
+                       value="{{ ticket['link'] }}">
+                </input>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <input type="text" name="manager" placeholder="Manager"
+                       class="form-control"
+                       value="{{ ticket['manager'] }}">
+                </input>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <select name="effort" class="form-control">
+                {%for x in effort%}
+                    {% if ticket['effort'] == x.id %}
+                        <option selected="selected" value={{x.id}}>{{x.name}}</option>
+                    {% else %}
+                        <option value={{x.id}}>{{x.name}}</option>
+                    {% endif %}
+                {%endfor%}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label for="notes">Notes</label>
+                <textarea name="notes" placeholder="Notes"
+                          class="form-control">{{ ticket['notes'] }}</textarea>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="actions">Actions</label>
+                <textarea name="actions" placeholder="Actions"
+                          class="form-control">{{ ticket['actions'] }}</textarea>
+            </div>
+        </div>
+    </div>  
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label for="resume">Description</label>
+                <textarea name="resume" placeholder="Resume"
+                          class="form-control">{{ ticket['resume'] }}</textarea>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="hours">Hours</label>
+                <textarea name="hours" placeholder="Hours"
+                          class="form-control">{{ ticket['hours'] }}</textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label for="complexity">Complexity</label>
+                <input type="text" name="complexity" placeholder="Complexity"
+                    class="form-control"
+                    value="{{ ticket['complexity'] }}">
+                </input>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="production_time">Production time</label>
+                <input type="text" name="production_time" placeholder="Production time"
+                    class="form-control"
+                    value="{{ ticket['production_time'] }}">
+                </input>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="completion_deadline">Deadline</label>
+                <input type="text" name="completion_deadline" placeholder="Completion deadline"
+                    class="form-control"
+                    value="{{ ticket['completion_deadline'] }}">
+                </input>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="dt_solution">Solution Date</label>
+                <input type="date" name="dt_solution" placeholder="Solution Date"
+                    class="form-control"
+                    value="{{ ticket['dt_solution'] }}">
+                </input>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="published">Published</label>
+                <select name="published" class="form-control">
+                {%for x in published%}
+                    {% if ticket['published'] == x.id %}
+                        <option selected="selected" value={{x.id}}>{{x.name}}</option>
+                    {% else %}
+                        <option value={{x.id}}>{{x.name}}</option>
+                    {% endif %}
+                {%endfor%}
+                </select>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select name="status" class="form-control">
+                    {%for x in status%}
+                        {% if ticket['status'] == x.id %}
+                            <option selected="selected" value={{x.id}}>{{x.name}}</option>
+                        {% else %}
+                            <option value={{x.id}}>{{x.name}}</option>
+                        {% endif %}
+                    {%endfor%}
+                </select>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="jira">Jira</label>
+                <input type="text" name="jira" placeholder="Jira"
+                    class="form-control"
+                    value="{{ ticket['jira'] }}">
+                </input>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a href="{{ url_for('tickets') }}" class="btn btn-warning">Back</a>
+                <input id="bBudget" type="button" value="Budget Ticket" class="btn btn-success btn-sm">
+                <input id="bDelete" type="button" value="Delete Ticket" class="btn btn-danger btn-sm">
+            </div>
+        </div>
+        <div class="col">
+            <span class="badge badge-primary">{{ ticket['tags']}}</span>
+            <span class="badge badge-danger">{{ ticket['jira']}}</span>
+        </div>
+        <div class="col">
+            <div class="form-check" style="float: right;">
+                <input class="form-check-input" type="checkbox" checked="checked" value="0" id="flexCheckDefault" name="save_continue">
+                <label class="form-check-label" for="flexCheckDefault">
+                Save and continue?
+                </label>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<hr>
+
+<div class="form-group" style="float: right;"> 
+<div class="row">
+    <div class="col">
+        <form id="fBudget" action="{{ url_for('budget', id=ticket['id']) }}" method="GET"></form>
+    </div>
+    <div class="col">
+        <form id="fDelete" action="{{ url_for('delete', id=ticket['id']) }}" method="POST"></form>
+    </div>
+</div>
+</div>
+
+<section class="flex">
+
+    <div style="display: inline;" class="tam">
+    
+        <table class="dadosy" style="width: 250px;">
+            <tr>
+                <td><b>Pontos de Complexidade</b></td>
+                <td><b>Tempo de Produção<br/>(em horas)</b></td>
+                <td><b>Prazo de conclusão<br />(dias úteis)</b></td>
+            </tr>  
+        {% for item in complexities %}
+        <tr><td>{{ item['complexity'] }}</td><td>{{ item['hours'] }}</td><td>{{ item['days'] }}</td></tr> 
+        {% endfor %}
+        </table>
+
+        <br />
+
+        <div style="float: right;">
+            <a href="{{ url_for('tickets') }}"><span class="badge badge-default">{{ tickets|length }} ticket(s)</span></a>
+        </div>
+            
+    </div>
+
+</section>
+
+{% endblock %}

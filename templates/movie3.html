@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>{% block title %} Budget Resume 3 {% endblock %}</h1>
+
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Geral</th>
+                    <th scope="col">Registros</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for item in resume0 %}
+                    <tr>
+                        <td>{{ item['visao'] }}</td>
+                        <td>{{ item['registros'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>  
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Orçamentos</th>
+                    <th scope="col">Registros</th>
+                  </tr>
+                </thead>
+                {% set ftotal1= {'total': 0} %} 
+                <tbody>
+                    {% for item in resume1 %}
+                    <tr>
+                        <td>{{ item['dt_ticket_br'] }}</td>
+                        <td>{{ item['registros'] }}</td>
+                        {% if ftotal1.update({'total': ftotal1.total + item['registros']}) %}{% endif %} 
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td><b>Total</b></td>
+                        <td>{{ ftotal1.total }}</td>
+                    </tr>
+                </tbody>
+            </table>  
+        </div>
+        <div class="col">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Melhorias</th>
+                    <th scope="col">Registros</th>
+                  </tr>
+                </thead>
+                {% set ftotal2= {'total': 0} %} 
+                <tbody>
+                    {% for item in resume2 %}
+                    <tr>
+                        <td>{{ item['dt_ticket_br'] }}</td>
+                        <td>{{ item['registros'] }}</td>
+                        {% if ftotal2.update({'total': ftotal2.total + item['registros']}) %}{% endif %} 
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td><b>Total</b></td>
+                        <td>{{ ftotal2.total }}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Geral</b></td>
+                        <td>{{ ftotal1.total + ftotal2.total }}</td>
+                    </tr>
+                </tbody>
+            </table>  
+        </div>
+    </div>
+
+{% endblock %}

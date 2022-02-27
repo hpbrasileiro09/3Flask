@@ -1,0 +1,81 @@
+{% extends "poker_base.html" %}
+
+{% block content %}
+
+<section class="meio">
+    <div><h1>PLANNING POKER - SCRUM</h1></div>
+    <div><img src="{{ url_for('static', filename='images/poker.jpg') }}" style="max-width: 30%;" /><br />
+        <div style="float: right;">
+            <a href="{{ url_for('tickets') }}"><span class="badge badge-default">{{ tickets|length }} ticket(s)</span></a>
+        </div>
+    </div>
+</section>
+
+<section class="flex">
+
+    {% for ticket in tickets %}
+	<div style="display: inline;" class="tam">
+	<table>
+		<tr><td>Ticket</td><td>{{ ticket['number'] }}</td></tr>  
+		<tr><td>Assunto</td><td>{{ ticket['subject'] }}</td></tr>
+		<tr><td>Cliente</td><td>{{ ticket['client'] }}</td></tr> 
+		<tr><td>Link</td><td><a href="{{ ticket['link'] }}">Link</a></td></tr> 
+		<tr><td>tempo</td><td>{{ ticket['Tempo'] }} dia(s)</td></tr>  
+		<tr><td>Gerente</td><td>{{ ticket['manager'] }}</td></tr>
+		<tr><td>Imagem</td><td>
+            {% for x in names %}
+                {% if ticket['number'] in x %}
+                    <img src="{{ url_for('static', filename='images/'+x) }}" width="15%" />
+                {% endif %}
+            {% endfor %}
+        </td></tr>
+		<tr><td>Nota</td><td class="nota"><p>
+            {% autoescape false %}
+                {{ ticket['notes'] | replace("\n", "<br/>") }}
+            {% endautoescape %}
+        </p></td></tr>
+		<tr><td>Ação</td><td class="acao"><p>
+            {% autoescape false %}
+                {{ ticket['actions'] | replace("\n", "<br/>") }}
+            {% endautoescape %}
+        </p></td></tr>
+		<tr><td class="redsox">Complexidade</td><td class="redsoxv">{{ ticket['complexity'] }} ponto(s)</td></tr>
+		<tr><td class="redsox">Tempo de produção</td><td class="redsoxv">{{ ticket['production_time'] }} hora(s)</td></tr>
+		<tr><td class="redsox">Prazo de conclusão</td><td class="redsoxv">{{ ticket['completion_deadline'] }} dias úteis</td></tr>
+        <tr><td></td><td style="float: right;"><a href="{{ url_for('edit', id=ticket['id']) }}">
+            <span class="badge badge-warning">Edit</span>
+        </a></td></tr>
+	</table>
+    </div>
+    {% endfor %}
+
+</section>
+
+<!-- =================================================================== -->	
+
+<section class="flex">
+
+    <div style="display: inline;" class="tam">
+    
+        <table class="dadosy" style="width: 250px;">
+            <tr>
+                <td><b>Pontos de Complexidade</b></td>
+                <td><b>Tempo de Produção<br/>(em horas)</b></td>
+                <td><b>Prazo de conclusão<br />(dias úteis)</b></td>
+            </tr>  
+        {% for item in complexities %}
+        <tr><td>{{ item['complexity'] }}</td><td>{{ item['hours'] }}</td><td>{{ item['days'] }}</td></tr> 
+        {% endfor %}
+        </table>
+
+        <br />
+
+        <div style="float: right;">
+            <a href="{{ url_for('tickets') }}"><span class="badge badge-default">{{ tickets|length }} ticket(s)</span></a>
+        </div>
+            
+    </div>
+
+</section>
+
+{% endblock %}

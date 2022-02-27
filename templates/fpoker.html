@@ -1,0 +1,282 @@
+{% extends "poker_base.html" %}
+
+{% block content %}
+
+<section class="meio">
+    <div><h1>PLANNING POKER - SCRUM</h1></div>
+    <div><img src="{{ url_for('static', filename='images/poker.jpg') }}" style="max-width: 30%;" /><br />
+        <div style="float: right;">
+            <a href="{{ url_for('tickets') }}"><span class="badge badge-default">{{ tickets|length }} ticket(s)</span></a>
+        </div>
+    </div>
+</section>
+
+    <div class="flex-container">
+    {% for ticket in tickets %}
+        {% if ticket['effort'] == 0 %}
+        <div>
+            {% if ticket['complexity'] != 0 %}
+            <div class="card" style="width: 270px; background-color: lightgray;">
+            {% else %}
+            <div class="card" style="width: 270px;">
+            {% endif %}
+                <div class="card-body">
+                <span class="badge badge-warning" style="font-size: 1.1em;">{{ ticket['number'] }}</span>
+                <span class="card-title">{{ ticket['subject'] }}</span>
+                  <p class="card-text">
+                    <span class="badge badge-default"><a href="{{ ticket['link'] }}">{{ ticket['link'] }}</a></span><br />
+                    <span class="badge badge-default">{{ ticket['Tempo'] }} dia(s)</span><br />
+                    <span class="badge badge-default">{{ ticket['manager'] }}</span><br />
+                    <form method="post" action="{{ url_for('lesma', id=ticket['id']) }}">
+                        <div class="row">
+                            <div class="col">
+                                <select style="margin-top: 3px;" name="effort" class="form-control form-control-sm">
+                                    {%for x in effort%}
+                                        {% if ticket['effort'] == x.id %}
+                                            <option selected="selected" value={{x.id}}>{{x.name}}</option>
+                                        {% else %}
+                                            <option value={{x.id}}>{{x.name}}</option>
+                                        {% endif %}
+                                    {%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <select style="margin-top: 3px;" name="complexity" class="form-control form-control-sm">
+                                    {%for x in complexities%}
+                                        {% if ticket['complexity'] == x.complexity %}
+                                            <option selected="selected" value={{x.complexity}}>{{x.complexity}}</option>
+                                        {% else %}
+                                            <option value={{x.complexity}}>{{x.complexity}}</option>
+                                        {% endif %}
+                                    {%endfor%}
+                                </select>
+                            </div>
+                            <div class="col">
+                                <button style="margin-top: 3px;" type="submit" class="btn btn-primary btn-sm">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                  </p>
+                  <span class="badge badge-success">{{ ticket['tags'] }}</span>
+                  {% if ticket['effort'] != 0 %}
+                      <span class="badge badge-danger">{{ effort[ticket['effort']]['name'] }}</span>
+                  {% endif %}
+                  <a style="float: right;" href="{{ url_for('edit', id=ticket['id']) }}">
+                    <span class="badge badge-warning">Edit</span>
+                </a>                  
+                </div>
+            </div>            
+        </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+
+    <h1>Front</h1>
+
+    <div class="flex-container">
+        {% set ftotal= {'total': 0} %}
+        {% for ticket in tickets %}
+            {% if ticket['effort'] == 1 %}
+            <div>
+                {% if ticket['complexity'] != 0 %}
+                <div class="card" style="width: 270px; background-color: lightgray;">
+                {% else %}
+                <div class="card" style="width: 270px;">
+                {% endif %}
+                    <div class="card-body">
+                    <span class="badge badge-warning" style="font-size: 1.1em;">{{ ticket['number'] }}</span>
+                    <span class="card-title">{{ ticket['subject'] }}</span>
+                      <p class="card-text">
+                        <span class="badge badge-default"><a href="{{ ticket['link'] }}">{{ ticket['link'] }}</a></span><br />
+                        <span class="badge badge-default">{{ ticket['Tempo'] }} dia(s)</span><br />
+                        <span class="badge badge-default">{{ ticket['manager'] }}</span><br />
+                        <form method="post" action="{{ url_for('lesma', id=ticket['id']) }}">
+                            <div class="row">
+                                <div class="col">
+                                    <select style="margin-top: 3px;" name="effort" class="form-control form-control-sm">
+                                        {%for x in effort%}
+                                            {% if ticket['effort'] == x.id %}
+                                                <option selected="selected" value={{x.id}}>{{x.name}}</option>
+                                            {% else %}
+                                                <option value={{x.id}}>{{x.name}}</option>
+                                            {% endif %}
+                                        {%endfor%}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <select style="margin-top: 3px;" name="complexity" class="form-control form-control-sm">
+                                        {%for x in complexities%}
+                                            {% if ticket['complexity'] == x.complexity %}
+                                                <option selected="selected" value={{x.complexity}}>{{x.complexity}}</option>
+                                            {% else %}
+                                                <option value={{x.complexity}}>{{x.complexity}}</option>
+                                            {% endif %}
+                                        {%endfor%}
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <button style="margin-top: 3px;" type="submit" class="btn btn-primary btn-sm">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                      </p>
+                      <span class="badge badge-success">{{ ticket['tags'] }}</span>
+                      {% if ticket['effort'] != 0 %}
+                          <span class="badge badge-danger">{{ effort[ticket['effort']]['name'] }}</span>
+                      {% endif %}
+                      <a style="float: right;" href="{{ url_for('edit', id=ticket['id']) }}">
+                        <span class="badge badge-warning">Edit</span>
+                      </a>                  
+                      {% if ftotal.update({'total': ftotal.total + 1}) %}{% endif %} 
+                    </div>
+                </div>            
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <span class="badge badge-primary">Front {{ ftotal.total }}</span>
+        <h1>Back</h1>
+
+        <div class="flex-container">
+            {% set ftotal= {'total': 0} %}
+            {% for ticket in tickets %}
+                {% if ticket['effort'] == 2 %}
+                <div>
+                    {% if ticket['complexity'] != 0 %}
+                    <div class="card" style="width: 270px; background-color: lightgray;">
+                    {% else %}
+                    <div class="card" style="width: 270px;">
+                    {% endif %}
+                        <div class="card-body">
+                        <span class="badge badge-warning" style="font-size: 1.1em;">{{ ticket['number'] }}</span>
+                        <span class="card-title">{{ ticket['subject'] }}</span>
+                          <p class="card-text">
+                            <span class="badge badge-default"><a href="{{ ticket['link'] }}">{{ ticket['link'] }}</a></span><br />
+                            <span class="badge badge-default">{{ ticket['Tempo'] }} dia(s)</span><br />
+                            <span class="badge badge-default">{{ ticket['manager'] }}</span><br />
+                            <form method="post" action="{{ url_for('lesma', id=ticket['id']) }}">
+                                <div class="row">
+                                    <div class="col">
+                                        <select style="margin-top: 3px;" name="effort" class="form-control form-control-sm">
+                                            {%for x in effort%}
+                                                {% if ticket['effort'] == x.id %}
+                                                    <option selected="selected" value={{x.id}}>{{x.name}}</option>
+                                                {% else %}
+                                                    <option value={{x.id}}>{{x.name}}</option>
+                                                {% endif %}
+                                            {%endfor%}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <select style="margin-top: 3px;" name="complexity" class="form-control form-control-sm">
+                                            {%for x in complexities%}
+                                                {% if ticket['complexity'] == x.complexity %}
+                                                    <option selected="selected" value={{x.complexity}}>{{x.complexity}}</option>
+                                                {% else %}
+                                                    <option value={{x.complexity}}>{{x.complexity}}</option>
+                                                {% endif %}
+                                            {%endfor%}
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <button style="margin-top: 3px;" type="submit" class="btn btn-primary btn-sm">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                          </p>
+                          <span class="badge badge-success">{{ ticket['tags'] }}</span>
+                          {% if ticket['effort'] != 0 %}
+                              <span class="badge badge-danger">{{ effort[ticket['effort']]['name'] }}</span>
+                          {% endif %}
+                          <a style="float: right;" href="{{ url_for('edit', id=ticket['id']) }}">
+                            <span class="badge badge-warning">Edit</span>
+                        </a>   
+                        {% if ftotal.update({'total': ftotal.total + 1}) %}{% endif %}                
+                        </div>
+                    </div>            
+                </div>
+                {% endif %}
+            {% endfor %}
+            </div>
+            <span class="badge badge-primary">Back {{ ftotal.total }}</span>
+
+            <h1>Back/Front</h1>
+
+            <div class="flex-container">
+                {% set ftotal= {'total': 0} %}
+                {% for ticket in tickets %}
+                    {% if ticket['effort'] == 3 %}
+                    <div>
+                        {% if ticket['complexity'] != 0 %}
+                        <div class="card" style="width: 270px; background-color: lightgray;">
+                        {% else %}
+                        <div class="card" style="width: 270px;">
+                        {% endif %}
+                            {% set assunto= {'assunto': ticket['subject']} %}
+                            {% if assunto.update({'assunto': ticket['subject'].replace("#urgente", "#urgente")}) %}{% endif %}  
+                            <div class="card-body">
+                            <span class="badge badge-warning" style="font-size: 1.1em;">{{ ticket['number'] }}</span>
+                            <span class="card-title">{{ assunto.assunto }}</span>
+                              <p class="card-text">
+                                <span class="badge badge-default"><a href="{{ ticket['link'] }}">{{ ticket['link'] }}</a></span><br />
+                                <span class="badge badge-default">{{ ticket['Tempo'] }} dia(s)</span><br />
+                                <span class="badge badge-default">{{ ticket['manager'] }}</span><br />
+                                <form method="post" action="{{ url_for('lesma', id=ticket['id']) }}">
+                                    <div class="row">
+                                        <div class="col">
+                                            <select style="margin-top: 3px;" name="effort" class="form-control form-control-sm">
+                                                {%for x in effort%}
+                                                    {% if ticket['effort'] == x.id %}
+                                                        <option selected="selected" value={{x.id}}>{{x.name}}</option>
+                                                    {% else %}
+                                                        <option value={{x.id}}>{{x.name}}</option>
+                                                    {% endif %}
+                                                {%endfor%}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <select style="margin-top: 3px;" name="complexity" class="form-control form-control-sm">
+                                                {%for x in complexities%}
+                                                    {% if ticket['complexity'] == x.complexity %}
+                                                        <option selected="selected" value={{x.complexity}}>{{x.complexity}}</option>
+                                                    {% else %}
+                                                        <option value={{x.complexity}}>{{x.complexity}}</option>
+                                                    {% endif %}
+                                                {%endfor%}
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <button style="margin-top: 3px;" type="submit" class="btn btn-primary btn-sm">Save</button>
+                                        </div>
+                                    </div>
+                                </form>
+                              </p>
+                              <span class="badge badge-success">{{ ticket['tags'] }}</span>
+                              {% if ticket['effort'] != 0 %}
+                                  <span class="badge badge-danger">{{ effort[ticket['effort']]['name'] }}</span>
+                              {% endif %}
+                              <a style="float: right;" href="{{ url_for('edit', id=ticket['id']) }}">
+                                <span class="badge badge-warning">Edit</span>
+                            </a> 
+                            {% if ftotal.update({'total': ftotal.total + 1}) %}{% endif %}                   
+                            </div>
+                        </div>            
+                    </div>
+                    {% endif %}
+                {% endfor %}
+                </div>
+                <span class="badge badge-primary">Back/Front {{ ftotal.total }}</span>
+
+<br />
+<br />
+<br />
+
+{% endblock %}    

@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>{% block title %} Budget Resume 2 {% endblock %}</h1>
+
+    <!-- ==R=E=S=U=M=E=============================================== -->
+
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <tr>
+                      <th scope="col" style="width: 450px;">History</th>
+                      {% for item in resume1 %}
+                      <th scope="col" style="width: 40px;" class="text-center">{{ item['created_at_br'] }}</th>
+                      {% endfor %}
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                        <td>Todos Abertos nos Grupos Evolução</td>
+                        {% for item in resume1 %}
+                        <td class="text-center">{{ item['mov1'] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Orçamentos Aprovados Abertos -Grupo Evolução</td>
+                        {% for item in resume1 %}
+                        <td class="text-center">{{ item['mov2'] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Orçamentos Pendentes de Orçar Abertos - Grupo Evolução</td>
+                        {% for item in resume1 %}
+                        <td class="text-center">{{ item['mov3'] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Orçamentos Aprovados Abertos - Todas as Equipes</td>
+                        {% for item in resume1 %}
+                        <td class="text-center">{{ item['mov4'] }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td>Orçamentos Abertos ( Pendentes Orçar) - Todas Equipes</td>
+                        {% for item in resume1 %}
+                        <td class="text-center">{{ item['mov5'] }}</td>
+                        {% endfor %}
+                    </tr>   
+                    <tr>
+                        <td>Orçamentos Pendentes Grupo Evolução</td>
+                        {% for item in resume1 %}
+                        <td class="text-center"><span class="badge badge-danger">{{ item['aux1'] }}</span></td>
+                        {% endfor %}
+                    </tr>   
+            </tbody>
+            </table>  
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Registros</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for item in resume2 %}
+                    <tr>
+                        <td>{{ item['visao'] }}</td>
+                        <td><span class="badge badge-warning">{{ item['registros'] }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>  
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col">
+            {% set flabel= {'label': 'Orçamentos Pendentes Grupo Evolução'} %} 
+            <p>{{ flabel.label }}</p>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Numero</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Jira</th>
+                    <th scope="col">Details</th>
+                  </tr>
+                </thead>
+                {% set ftotal= {'total': 0} %} 
+                <tbody>
+                    {% for item in resume3 %}
+                    <tr>
+                        <td><a href="{{ url_for('nedit', number=item['number']) }}"><span class="badge badge-default">{{ item['number'] }}</span></a></td>
+                        <td>{{ item['dt_ticket'] }}</td>
+                        <td><span class="badge badge-danger">{{ item['jira'] }}</span></td>
+                        <td><span class="badge badge-default">{{ item['subject'] }}</span>
+                        <span class="badge badge-success">{{ item['link'] }}</span>
+                        <span class="badge badge-warning">{{ item['tags'] }}</span>{% if item['net'] == 0 %}<a href="{{ url_for('create_from_M1', number=item['number']) }}"><span class="badge badge-danger">+</span></a>{% endif %}</td>
+                        {% if ftotal.update({'total': ftotal.total + 1}) %}{% endif %} 
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="4"><span class="badge badge-default">({{ ftotal.total }} registros)</span></td>
+                    </tr>
+                </tbody>
+            </table>  
+        </div>
+    </div>
+
+{% endblock %}

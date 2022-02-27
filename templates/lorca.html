@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form method="post">
+
+<table class="table" id="l_orca">
+    <thead>
+        <tr>
+            <th><input type="checkbox" class="chkBX" value="1" id="select_all_"></th>
+            <th>Ticket</th>
+            <th>Detalhe</th>
+            <th>Complexidade ponto(s)</th>
+            <th>Tempo</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ticket in tickets %}
+        <tr>
+            <td><input type="checkbox" class="chkBX" value="{{ ticket['id'] }}" id="chkbox" name="chkbox"></td>  
+            <td>{{ ticket['number'] }}</td>  
+            <td>
+                Assunto:&nbsp;{{ ticket['subject'] }}<br />
+                Cliente:&nbsp;{{ ticket['client'] }}<br />
+                Data:&nbsp;{{ ticket['dt_ticket'] }}<br />
+                Gerente:&nbsp;{{ ticket['manager'] }}<br />
+                Link:&nbsp;<a href="{{ ticket['link'] }}">{{ ticket['link'] }}</a><br/>
+                <span class="badge badge-success">{{ ticket['tags'] }}</span><br/>
+                <pre style="height: 100px; width: 800px; color:lime; background-color: black;">{{ ticket['resume'] }}</pre>
+            </td> 
+            <td><input type="text" style="width: 35px;" value="{{ ticket['complexity'] }}" name="comp_{{ ticket['id'] }}">   </td>  
+            <td>{{ ticket['Tempo'] }}</td>
+            <td><a href="{{ url_for('edit', id=ticket['id']) }}"><span class="badge badge-warning">Edit</span></a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<input type="text" id="bag" name="bag" value="">
+<input type="hidden" id="action" name="action" value="1">
+
+<button type="submit" class="btn btn-primary">Send</button>
+
+</form>
+
+<!-- =================================================================== -->	
+
+<section class="flex">
+
+    <div style="display: inline;" class="tam">
+    
+        <div style="float: right;">
+            <a href="{{ url_for('tickets') }}"><span class="badge badge-default">{{ tickets|length }} ticket(s)</span></a>
+        </div>
+            
+    </div>
+
+</section>
+
+{% endblock %}

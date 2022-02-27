@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>{% block title %} Budget Resume 4 {% endblock %}</h1>
+
+    <!-- ==R=E=S=U=M=E=============================================== -->
+
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <tr>
+                      <th scope="col">Data</th>
+                      <th scope="col">Dia</th>
+                      <th scope="col">Orçamentos</th>
+                      <th scope="col">Melhorias</th>
+                      <th scope="col">Total</th>
+                      <th scope="col">Acumulado</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    {% set ftotalO= {'total': 0} %} 
+                    {% set ftotalM= {'total': 0} %} 
+                    {% set ftotalG= {'total': 0} %} 
+                    {% for item in resume1 %}
+                    <tr>
+                        <td>{{ item['dt_ticket'] }}</td>
+                        <td>{{ item['weekday'] }}</td>
+                        <td>{{ item['orcamentos'] }}</td>
+                        <td>{{ item['melhorias'] }}</td>
+                        <td>{{ item['total'] }}</td>
+                        <td>{{ item['soma'] }}</td>
+                        {% if ftotalO.update({'total': ftotalO.total + item['orcamentos']}) %}{% endif %} 
+                        {% if ftotalM.update({'total': ftotalM.total + item['melhorias']}) %}{% endif %} 
+                        {% if ftotalG.update({'total': ftotalG.total + item['total']}) %}{% endif %} 
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>{{ ftotalO.total }}</td>
+                        <td>{{ ftotalM.total }}</td>
+                        <td>{{ ftotalG.total }}</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>  
+        </div>
+    </div>
+
+{% endblock %}

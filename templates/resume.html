@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>{% block title %} Resume {% endblock %}</h1>
+
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Year</th>
+                    <th scope="col">Month</th>
+                    <th scope="col">Regs</th>
+                  </tr>
+                </thead>
+                {% set ftotal= {'total': 0} %} 
+                <tbody>
+                    {% for item in resume %}
+                    <tr>
+                        <td>{{ item['year'] }}</td>
+                        <td>{{ item['month'] }}</td>
+                        <td>
+                            <a href="{{ url_for('triagem') }}?d={{ item['year'] }}{{ item['month'] }}&q={{ item['regs'] }}">
+                                <span class="badge badge-warning">{{ item['regs'] }}</span>
+                            </a>
+                        </td>
+                        {% if ftotal.update({'total': ftotal.total + item['regs']}) %}{% endif %} 
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td></td>
+                        <td>Total</td>
+                        <td><span class="badge badge-warning">{{ ftotal.total }}</span></td>
+                    </tr>
+                </tbody>
+            </table>  
+        </div>
+        <div class="col">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Status</th>
+                    <th scope="col">Regs</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for item in resume1 %}
+                    <tr>
+                        <td>{{ item['status_lbl'] }}</td>
+                        <td>{{ item['registers'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>  
+        </div>
+    </div>
+
+    <pre>{% for item in resume %}{{ item['year']}};{{ item['month']}};{{ item['regs']}}<br />{% endfor %}<br />{% for item in resume1 %}{{ item['status_lbl'] }};{{ item['registers'] }}<br />{% endfor %}</pre>
+
+{% endblock %}

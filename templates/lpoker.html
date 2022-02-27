@@ -1,0 +1,72 @@
+{% extends "lpoker_base.html" %}
+
+{% block content %}
+
+<section class="meio">
+    <div><h1>PLANNING POKER - SCRUM</h1></div>
+    <div><img src="{{ url_for('static', filename='images/poker.jpg') }}" style="max-width: 30%;" /><br />
+        <div style="float: right;">
+            <a href="{{ url_for('tickets') }}"><span class="badge badge-default">{{ tickets|length }} ticket(s)</span></a>
+        </div>
+    </div>
+</section>
+
+<section class="flex">
+
+    <form method="post">
+
+	<table>
+    <tr>
+    <td><input type="checkbox" class="chkBX" value="1" id="select_all_"></td>
+    <td>Ticket</td>
+    <td>Detalhe</td>
+    <td>Complexidade ponto(s)</td>
+    <td>Tempo produção hora(s)</td>
+    <td>Prazo conclusão dias úteis</td>
+    <td>Actions</td>
+    </tr>
+    {% for ticket in tickets %}
+    <tr>
+    <td><input type="checkbox" class="chkBX" value="{{ ticket['id'] }}" id="chkbox" name="chkbox"></td>  
+    <td>{{ ticket['number'] }}</td>  
+    <td>
+        Assunto:&nbsp;{{ ticket['subject'] }}<br />
+        Tempo:&nbsp;{{ ticket['Tempo'] }} dia(s)<br />
+        Cliente:&nbsp;{{ ticket['client'] }}<br />
+        Gerente:&nbsp;{{ ticket['manager'] }}<br />
+        Link:&nbsp;<a href="{{ ticket['link'] }}">{{ ticket['link'] }}</a><br/>
+        <span class="badge badge-success">{{ ticket['tags'] }}</span><br/>
+        <pre style="color:lime; background-color: black;">{{ ticket['actions'] }}</pre>
+    </td> 
+    <td><input type="text" style="width: 35px;" value="{{ ticket['complexity'] }}" name="comp_{{ ticket['id'] }}">   </td>  
+    <td>{{ ticket['production_time'] }}</td>
+    <td>{{ ticket['completion_deadline'] }}</td>
+    <td><a href="{{ url_for('edit', id=ticket['id']) }}"><span class="badge badge-warning">Edit</span></a></td>
+    </tr>
+    {% endfor %}
+    </table>
+
+    <input type="text" id="bag" name="bag" value="">
+    <input type="hidden" id="action" name="action" value="1">
+
+    <button type="submit" class="btn btn-primary">Send</button>
+
+    </form>
+
+</section>
+
+<!-- =================================================================== -->	
+
+<section class="flex">
+
+    <div style="display: inline;" class="tam">
+    
+        <div style="float: right;">
+            <a href="{{ url_for('tickets') }}"><span class="badge badge-default">{{ tickets|length }} ticket(s)</span></a>
+        </div>
+            
+    </div>
+
+</section>
+
+{% endblock %}

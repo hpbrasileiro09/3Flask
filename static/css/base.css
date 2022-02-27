@@ -1,0 +1,18 @@
+
+body {
+	padding-top: 5rem;
+}
+.starter-template {
+	padding: 3rem 1.5rem;
+	text-align: center;
+}
+
+.dadosy table, .dadosy th, .dadosy td {
+	background-color: yellow;
+	font-size: 10px;
+	border-collapse:collapse;
+	vertical-align:top;
+	border: 1px solid black;
+	font-family: sans-serif, Tahoma;
+	color: #000;
+}

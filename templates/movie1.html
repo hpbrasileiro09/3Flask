@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>{% block title %} Budget Resume 1 {% endblock %}</h1>
+
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Geral</th>
+                    <th scope="col">Registros</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for item in resume1 %}
+                    <tr>
+                        <td>{{ item['visao'] }}</td>
+                        <td><span class="badge badge-warning">{{ item['registros'] }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>  
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Orçamentos aprovados sem Jira</th>
+                    <th scope="col">Registros</th>
+                  </tr>
+                </thead>
+                {% set ftotal= {'total': 0} %} 
+                <tbody>
+                    {% for item in resume2 %}
+                    <tr>
+                        <td>{{ item['visao'] }}</td>
+                        <td><span class="badge badge-warning">{{ item['registros'] }}</span></td>
+                        {% if ftotal.update({'total': ftotal.total + item['registros']}) %}{% endif %} 
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td></td>
+                        <td><span class="badge badge-warning">{{ ftotal.total }}</span></td>
+                    </tr>
+                </tbody>
+            </table>  
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col">
+            {% set flabel= {'label': 'Orçamentos Aprovados Abertos - Grupo Evolução'} %} 
+            <p>{{ flabel.label }}</p>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Numero</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Jira</th>
+                    <th scope="col">Details</th>
+                  </tr>
+                </thead>
+                {% set ftotal= {'total': 0} %} 
+                <tbody>
+                    {% for item in resume3 %}
+                    <tr>
+                        <td><a href="{{ url_for('nedit', number=item['number']) }}"><span class="badge badge-default">{{ item['number'] }}</span></a></td>
+                        <td>{{ item['dt_ticket'] }}</td>
+                        <td><span class="badge badge-danger">{{ item['jira'] }}</span></td>
+                        <td><span class="badge badge-default">{{ item['subject'] }}</span>
+                        <span class="badge badge-success">{{ item['link'] }}</span>
+                        <span class="badge badge-warning">{{ item['tags'] }}</span>{% if item['net'] == 0 %}<a href="{{ url_for('create_from_M2', number=item['number']) }}"><span class="badge badge-danger">+</span></a>{% endif %}</td>
+                        {% if ftotal.update({'total': ftotal.total + 1}) %}{% endif %} 
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="4"><span class="badge badge-default">({{ ftotal.total }} registros)</span></td>
+                    </tr>
+                </tbody>
+            </table>  
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col">
+            {% set flabel= {'label': 'Orçamentos Aprovados Abertos - Todas as Equipes (que não Evolução)'} %} 
+            <p>{{ flabel.label }}</p>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Numero</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Jira</th>
+                    <th scope="col">Details</th>
+                  </tr>
+                </thead>
+                {% set ftotal= {'total': 0} %} 
+                <tbody>
+                    {% for item in resume4 %}
+                    <tr>
+                        <td><a href="{{ url_for('nedit', number=item['number']) }}"><span class="badge badge-default">{{ item['number'] }}</span></a></td>
+                        <td>{{ item['dt_ticket'] }}</td>
+                        <td><span class="badge badge-danger">{{ item['jira'] }}</span></td>
+                        <td><span class="badge badge-default">{{ item['subject'] }}</span>
+                        <span class="badge badge-success">{{ item['link'] }}</span>
+                        <span class="badge badge-warning">{{ item['tags'] }}</span>{% if item['net'] == 0 %}<a href="{{ url_for('create_from_M4', number=item['number']) }}"><span class="badge badge-danger">+</span></a>{% endif %}</td>
+                        {% if ftotal.update({'total': ftotal.total + 1}) %}{% endif %} 
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="4"><span class="badge badge-default">({{ ftotal.total }} registros)</span></td>
+                    </tr>
+                </tbody>
+            </table>  
+        </div>
+    </div>
+
+{% endblock %}

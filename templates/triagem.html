@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>{% block title %} Triagem - {{ pdate }} ({{ qregs }} registro(s)) {% endblock %}</h1>
+
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ message }}
+    </div>    
+    {% endfor %}
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Number</th>
+            <th scope="col">Subject</th>
+            <!--th scope="col">Notes</th-->
+            <th scope="col">Data</th>
+            <th scope="col">Tags</th>
+            <th scope="col">Tempo</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket['number'] }}</td>
+                <td>{{ ticket['subject'] }}</td>
+                <!--td>
+                    <textarea name="notes" rows="1" style="height:100%;" placeholder="Notes"
+                    class="form-control">{{ ticket['notes'] }}</textarea>                    
+                </td-->
+                <td>{{ ticket['dt_ticket'] }}</td>
+                <td>{{ ticket['tags'] }}</td>
+                <td>{{ ticket['Tempo'] }}</td>
+                <td><span class="badge badge-success">{{ status[ticket['status']] }}</span><span class="badge badge-danger">{{ ticket['jira'] }}</span></td>
+                <td>
+                    <a href="{{ url_for('edit', id=ticket['id']) }}">
+                        <span class="badge badge-warning">Edit</span>
+                    </a>
+                </td>
+              </tr>
+        {% endfor %}
+        </tbody>
+    </table>  
+    
+{% endblock %}

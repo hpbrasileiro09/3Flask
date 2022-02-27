@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<br />
+
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ message }}
+    </div>    
+{% endfor %}
+
+<form method="post">
+
+    <input type="hidden" name="description" value="{{ request.form['description'] }}"></input>
+
+    <div class="row">
+        <div class="col-2">
+            <div class="form-group">
+                <input type="text" name="number" placeholder="Number"
+                       class="form-control"
+                       value="{{ request.form['number'] or '' }}">
+                </input>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <input type="date" name="dt_ticket" placeholder="Ticket Date"
+                       class="form-control"
+                       value="{{ request.form['dt_ticket'] }}">
+                </input>
+            </div>
+        </div>
+        <div class="col-7">
+            <div class="form-group">
+                <input type="text" name="subject" placeholder="Subject"
+                       class="form-control"
+                       value="{{ request.form['subject'] or '' }}">
+                </input>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <input type="text" name="client" placeholder="Client"
+                       class="form-control"
+                       value="{{ request.form['client'] or '' }}">
+                </input>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <input type="text" name="link" placeholder="Link"
+                       class="form-control"
+                       value="{{ request.form['link'] or '' }}">
+                </input>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <input type="text" name="manager" placeholder="Manager"
+                       class="form-control"
+                       value="{{ request.form['manager'] or '' }}">
+                </input>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label for="notes">Notes</label>
+                <textarea name="notes" placeholder="Notes"
+                          class="form-control">{{ request.form['notes'] or '' }}</textarea>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="actions">Actions</label>
+                <textarea name="actions" placeholder="Actions"
+                          class="form-control">{{ request.form['actions'] or '' }}</textarea>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label for="resume">Resume</label>
+                <textarea name="resume" placeholder="Resume"
+                          class="form-control">{{ request.form['resume'] or '' }}</textarea>
+            </div>
+        </div>
+        <div class="col">
+                <div class="form-group">
+                <label for="hours">Hours</label>
+                <textarea name="hours" placeholder="Hours"
+                            class="form-control">{{ request.form['hours'] or '' }}</textarea>
+                </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2">
+            <div class="form-group">
+                <label for="complexity">Complexity</label>
+                <input type="text" name="complexity" placeholder="Complexity"
+                    class="form-control"
+                    value="{{ request.form['complexity'] or 0 }}">
+                </input>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label for="production_time">Production time</label>
+                <input type="text" name="production_time" placeholder="Production time"
+                    class="form-control"
+                    value="{{ request.form['production_time'] or 0 }}">
+                </input>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label for="completion_deadline">Deadline</label>
+                <input type="text" name="completion_deadline" placeholder="Completion deadline"
+                    class="form-control"
+                    value="{{ request.form['completion_deadline'] or 0 }}">
+                </input>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label for="dt_solution">Solution Date</label>
+                <input type="date" name="dt_solution" placeholder="Solution Date"
+                    class="form-control"
+                    value="{{ request.form['dt_solution'] }}">
+                </input>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label for="published">Published</label>
+                <select name="published" class="form-control">
+                {%for x in published%}
+                    {% if (request.form["published"] or 1) == x.id %}
+                        <option selected="selected" value={{x.id}}>{{x.name}}</option>
+                    {% else %}
+                        <option value={{x.id}}>{{x.name}}</option>
+                    {% endif %}
+                {%endfor%}
+                </select>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select name="status" class="form-control">
+                    {%for x in status%}
+                        {% if (request.form["status"] or 1) == x.id %}
+                            <option selected="selected" value={{x.id}}>{{x.name}}</option>
+                        {% else %}
+                            <option value={{x.id}}>{{x.name}}</option>
+                        {% endif %}
+                    {%endfor%}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a href="{{ url_for('tickets') }}" class="btn btn-warning">Back</a>
+    </div>
+
+</form>
+
+<hr>
+{% endblock %}

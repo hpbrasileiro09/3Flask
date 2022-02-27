@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{% block title %} LResume {% endblock %}</h1>
+
+<div class="row">
+
+<div class="col-10">
+
+    <form id="fupdate" name="fupdate" action="{{ url_for('lresume') }}" method="post">
+
+    <table class="table">
+    <tr>
+    <td><input type="checkbox" class="chkBX" value="1" id="select_all_"></td>
+    <td>Data</td>
+    <td>Mov1</td>
+    <td>Mov2</td>
+    <td>Mov3</td>
+    <td>Mov4</td>
+    <td>Mov5</td>
+    <td>Aux1</td>
+    <td>Aux2</td>
+    <td>Aux3</td>
+    <td>Aux4</td>
+    <td>Aux5</td>
+    <td>Pub</td>
+    </tr>
+    {% for item in resume %}
+    <tr>
+    <td><input type="checkbox" class="chkBX" value="{{ item['id'] }}" id="chkbox" name="chkbox"></td>  
+    <td>{{ item['created_at_br'] }}</td>  
+    <td><input type="text" style="width: 35px;" value="{{ item['mov1'] }}" name="mov1_{{ item['id'] }}"></td>  
+    <td><input type="text" style="width: 35px;" value="{{ item['mov2'] }}" name="mov2_{{ item['id'] }}"></td>  
+    <td><input type="text" style="width: 35px;" value="{{ item['mov3'] }}" name="mov3_{{ item['id'] }}"></td>  
+    <td><input type="text" style="width: 35px;" value="{{ item['mov4'] }}" name="mov4_{{ item['id'] }}"></td>  
+    <td><input type="text" style="width: 35px;" value="{{ item['mov5'] }}" name="mov5_{{ item['id'] }}"></td>  
+    <td><input type="text" style="width: 35px;" value="{{ item['aux1'] }}" name="aux1_{{ item['id'] }}"></td>  
+    <td><input type="text" style="width: 35px;" value="{{ item['aux2'] }}" name="aux2_{{ item['id'] }}"></td>  
+    <td><input type="text" style="width: 35px;" value="{{ item['aux3'] }}" name="aux3_{{ item['id'] }}"></td>  
+    <td><input type="text" style="width: 35px;" value="{{ item['aux4'] }}" name="aux4_{{ item['id'] }}"></td>  
+    <td><input type="text" style="width: 35px;" value="{{ item['aux5'] }}" name="aux5_{{ item['id'] }}"></td>  
+    <td><input type="text" style="width: 35px;" value="{{ item['published'] }}" name="published_{{ item['id'] }}"></td>  
+    </tr>
+    {% endfor %}
+    </table>
+
+    <input type="hidden" id="bag" name="bag" value="">
+    <input type="hidden" id="action" name="action" value="1">
+
+    <button type="submit" class="btn btn-sm btn-primary btnSubmit">Update</button> 
+
+    </form>
+
+</div>
+
+<div class="col-2">
+
+    <form id="fcreate" name="fcreate" action="{{ url_for('handle_data') }}" method="post">
+
+        <input type="hidden" style="width: 35px;" value="0" name="aux2_0">
+        <input type="hidden" style="width: 35px;" value="0" name="aux3_0">
+        <input type="hidden" style="width: 35px;" value="0" name="aux4_0">
+        <input type="hidden" style="width: 35px;" value="0" name="aux5_0">
+
+        <table class="table">
+        <tr><td>Mov1</td><td><input type="text" style="width: 35px;" value="{{ tabela[0] }}" name="mov1_0"></td></tr>
+        <tr><td>Mov2</td><td><input type="text" style="width: 35px;" value="{{ tabela[1] }}" name="mov2_0"></td></tr>
+        <tr><td>Mov3</td><td><input type="text" style="width: 35px;" value="{{ tabela[2] }}" name="mov3_0"></td></tr>
+        <tr><td>Mov4</td><td><input type="text" style="width: 35px;" value="{{ tabela[3] }}" name="mov4_0"></td></tr>
+        <tr><td>Mov5</td><td><input type="text" style="width: 35px;" value="{{ tabela[4] }}" name="mov5_0"></td></tr>
+        <tr><td>Aux1</td><td><input type="text" style="width: 35px;" value="0" name="aux1_0"></td></tr>
+        </table>
+        
+        <button type="submit" class="btn btn-sm btn-primary">Insert</button>
+        
+    </form>
+
+</div>
+
+</div>
+
+{% endblock %}

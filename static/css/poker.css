@@ -1,0 +1,144 @@
+/* =============================================== */
+
+body{
+
+	zoom:150%
+	
+  }
+
+body,
+ul,
+li,
+p {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  font-size: 10px;
+  font-family: Arial;
+}
+
+
+.header { background: #1d1e20; display: flex; flex-wrap: wrap;
+ justify-content: space-between; align-items: center; padding: 1px; }
+
+.menu {
+  display: flex;
+}
+
+.menu li {
+  margin-left: 10px;
+}
+
+.menu li a {
+  display: block;
+  padding: 10px;
+}
+
+/* CSS FLEXBOX 1 */
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.flex > div {
+  flex: 1 1 2000px;
+  margin: 10px;
+}
+
+.meio {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* =============================================== */
+
+hr { border-top: 2px solid #00ff00;}
+
+table {
+	width: 700px;
+}
+
+table, th, td {
+
+	background-color: #336;
+	font-size: 10px;
+	border-collapse:collapse;
+	vertical-align:top;
+	border: 1px solid black;
+	font-family: sans-serif, Tahoma;
+	color: #00ff00;
+}
+
+.dadosy table, .dadosy th, .dadosy td {
+	background-color: yellow;
+	font-size: 10px;
+	border-collapse:collapse;
+	vertical-align:top;
+	border: 1px solid black;
+	font-family: sans-serif, Tahoma;
+	color: #000;
+}
+
+.acao {
+	background-color: #fff;
+	font-size: 10px;
+	border-collapse:collapse;
+	vertical-align:top;
+	border: 1px solid black;
+	font-family: sans-serif, Tahoma;
+	color: #000;
+}
+
+.nota {
+	background-color: #fff;
+	font-size: 10px;
+	border-collapse:collapse;
+	vertical-align:top;
+	border: 1px solid black;
+	font-family: sans-serif, Tahoma;
+	color: #000;
+}
+
+#alertas {
+	font-family: sans-serif, Tahoma;
+	margin:0 auto;
+	margin-top:15%;
+	text-align: center;
+	width:400px;
+	height:100px;
+	color: #00ff00;
+}
+
+.redsox {
+	color: yellow;
+	font-size: 10px;
+}
+
+.redsoxv {
+	color: yellow;
+	font-weight: bold;
+	font-size: 10px;
+}
+
+/* =============================================== */
+
+.flex-container {
+	display: flex;
+	background-color: #2e2c2c;
+	flex-flow: row wrap;
+}
+
+.flex-container > div {
+	margin: 10px;
+	padding: 1px;
+	font-size: 12px;
+}
+
+.x-form {
+	/*padding: 5px;*/
+}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{% block title %} Welcome to Tickets {% endblock %}</h1>
+
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ message }}
+    </div>    
+    {% endfor %}
+
+{% endblock %}

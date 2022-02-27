@@ -1,0 +1,17 @@
+{% extends "poker_base.html" %}
+
+{% block content %}
+
+<section class="meio">
+    <div><h1>PLANNING POKER - SCRUM</h1></div>
+    <div><img src="{{ url_for('static', filename='images/poker.jpg') }}" style="max-width: 30%;" /><br />
+        <div style="float: right;">
+            <a href="{{ url_for('tickets') }}"><span class="badge badge-default">{{ tickets|length }} ticket(s)</span></a>
+        </div>
+    </div>
+</section>
+
+<textarea name="registros" cols="10" rows="40" class="form-control">
+{{ resp }}
+</textarea>
+{% endblock %}    

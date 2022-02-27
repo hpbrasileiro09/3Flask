@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>    
+    {% endfor %}
+
+    <form method="post">
+
+        <div class="row">
+
+            <div class="col-3">
+                <div class="form-group">
+                    <input type="date" name="dt_ini" placeholder="Initial Date" class="form-control" value="{{ dt_ini }}"></input>
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="form-group">
+                    <input type="date" name="dt_fim" placeholder="End Date" class="form-control" value="{{ dt_fim }}"></input>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="form-group">
+                    <input type="text" name="busca" placeholder="Search" class="form-control" value="{{ busca }}"></input>
+                </div>
+            </div>
+
+            <div class="col-2">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+
+    <table class="table" id="dt_tickets">
+        <thead>
+          <tr>
+            <th scope="col">Number</th>
+            <th scope="col">Subject</th>
+            <th scope="col">Ticket Dt.</th>
+            <th scope="col">Jira</th>
+            <th scope="col">Effort</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket['number'] }}</td>
+                <td>{{ ticket['subject'] }}</td>
+                <td nowrap>{{ ticket['dt_ticket'] }}</td>
+                <td><span class="badge badge-danger">{{ ticket['jira'] }}</span></td>
+                <td><span class="badge badge-warning">{{ effort[ticket['effort']]['name'] }}</span></td>
+                <td><span class="badge badge-success">{{ status[ticket['status']] }}</span></td>
+                <td>
+                    <a href="{{ url_for('edit', id=ticket['id']) }}">
+                        <span class="badge badge-warning">Edit</span>
+                    </a>
+                    <div style="display: none;"><span>{{ ticket['notes']}}</span><span>{{ ticket['actions']}}</span></div>
+                </td>
+              </tr>
+        {% endfor %}
+        </tbody>
+    </table>  
+    
+{% endblock %}
