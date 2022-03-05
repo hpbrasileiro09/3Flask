@@ -16,3 +16,10 @@ body {
 	font-family: sans-serif, Tahoma;
 	color: #000;
 }
+
+.textareaX {
+	resize: none;
+	overflow: hidden;
+	min-height: 50px;
+	max-height: 100px;
+}

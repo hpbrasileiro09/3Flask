@@ -607,7 +607,7 @@ def tickets():
             if len(busca) > 0:
                 _where += " AND subject LIKE '%{}%'".format(busca)
         else:
-            _where += "WHERE subject LIKE '%{}%'".format(busca)
+            _where += f"WHERE (subject LIKE '%{busca}%' OR notes LIKE '%{busca}%' OR actions LIKE '%{busca}%' OR description LIKE '%{busca}%')"
         _sql = "SELECT *, Cast ((JulianDay('now') - JulianDay(dt_ticket)) As Integer) AS Tempo FROM tickets {} ORDER BY dt_ticket DESC".format(_where)
         conn = get_db_connection()
         tickets = conn.execute(_sql).fetchall()
@@ -615,7 +615,7 @@ def tickets():
         return render_template('tickets.html', tickets=tickets, status=get_status_all(), 
             effort=get_effort(), dt_ini=dt_ini, dt_fim=dt_fim, busca=busca)
     else:
-        dias = 7
+        dias = 396
         hoje = date.today()
         days_to_subtract = dias
         dt_ini = hoje - timedelta(days=days_to_subtract)

@@ -16,7 +16,7 @@
 
     <header>
   
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
       <a class="navbar-brand" href="{{ url_for('index')}}">Budget</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -60,8 +60,8 @@
         -->
         <form class="form-inline my-2 my-lg-0" action="{{ url_for('busca') }}" method="POST">
           <input class="form-control me-2" style="width: 120px;" name="number" type="text" placeholder="Ticket" aria-label="Ticket">
-          <button class="btn btn-outline-success" style="margin-left: 3px;" type="submit">Go</button>
-          <a class="btn btn-outline-warning no-wrap" style="margin-left: 3px;" href="{{ url_for('create')}}">New</a>
+          <button class="btn btn-warning" style="margin-left: 3px;" type="submit">Go</button>
+          <a class="btn btn-success no-wrap" style="margin-left: 3px;" href="{{ url_for('create')}}">New</a>
         </form>
       </div>
     </nav>
@@ -83,6 +83,30 @@
 
     <script type="text/javascript" language="javascript">
         jQuery(document).ready(function($) {
+
+          function auto_grow(element) {
+            element.style.height = "5px";
+            element.style.height = (element.scrollHeight)+"px";
+          }
+
+          $(".txarea0").bind("input", function(e) {
+            while( $(this).outerHeight() < this.scrollHeight +
+                  parseFloat($(this).css("borderTopWidth")) +
+                  parseFloat($(this).css("borderBottomWidth"))
+                  && $(this).height() < 500 // Altura máxima
+            ) {
+                $(this).height($(this).height()+1);
+            };
+          });
+
+          $('.txarea1').on('keyup onpaste', function () {
+            var alturaScroll = this.scrollHeight;
+            var alturaCaixa = $(this).height();
+            if (alturaScroll > (alturaCaixa + 10)) {
+                if (alturaScroll > 500) return;
+                $(this).css('height', alturaScroll);
+            }
+          });
 
           $('#dt_tickets').DataTable({
               "iDisplayLength": 13,
