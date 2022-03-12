@@ -235,21 +235,43 @@
 
     <div style="display: inline;" class="tam">
     
-        <table class="dadosy" style="width: 250px;">
-            <tr>
-                <td><b>Pontos de Complexidade</b></td>
-                <td><b>Tempo de Produção<br/>(em horas)</b></td>
-                <td><b>Prazo de conclusão<br />(dias úteis)</b></td>
-            </tr>  
-        {% for item in complexities %}
-        <tr><td>{{ item['complexity'] }}</td><td>{{ item['hours'] }}</td><td>{{ item['days'] }}</td></tr> 
-        {% endfor %}
-        </table>
-
-        <br />
-
-        <div style="float: right;">
-            <a href="{{ url_for('tickets') }}"><span class="badge badge-default">{{ tickets|length }} ticket(s)</span></a>
+        <div class="row">
+            <div class="col">
+                <table class="dadosy" style="width: 300px;">
+                    <tr>
+                        <td><b>Pontos de Complexidade</b></td>
+                        <td><b>Tempo de Produção<br/>(em horas)</b></td>
+                        <td><b>Prazo de conclusão<br />(dias úteis)</b></td>
+                    </tr>  
+                    {% for item in comp1 %}
+                    <tr><td>{{ item['complexity'] }}</td><td>{{ item['hours'] }}</td><td>{{ item['days'] }}</td></tr> 
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col">
+                <table class="dadosy" style="width: 300px;">
+                    <tr>
+                        <td><b>Pontos de Complexidade</b></td>
+                        <td><b>Tempo de Produção<br/>(em horas)</b></td>
+                        <td><b>Prazo de conclusão<br />(dias úteis)</b></td>
+                    </tr>  
+                    {% for item in comp2 %}
+                    <tr><td>{{ item['complexity'] }}</td><td>{{ item['hours'] }}</td><td>{{ item['days'] }}</td></tr> 
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col">
+                <table class="dadosy" style="width: 300px;">
+                    <tr>
+                        <td><b>Pontos de Complexidade</b></td>
+                        <td><b>Tempo de Produção<br/>(em horas)</b></td>
+                        <td><b>Prazo de conclusão<br />(dias úteis)</b></td>
+                    </tr>  
+                    {% for item in comp3 %}
+                    <tr><td>{{ item['complexity'] }}</td><td>{{ item['hours'] }}</td><td>{{ item['days'] }}</td></tr> 
+                    {% endfor %}
+                </table>
+            </div>
         </div>
             
     </div>

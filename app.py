@@ -195,9 +195,25 @@ def edit(id):
                 request.form['jira'],
                 request.form['hours'])
             ticket = get_ticket(id)
-            return render_template('edit.html', ticket=ticket, published=get_published(), status=get_status(), complexities=get_complexity(), effort=get_effort())
+            return render_template('edit.html', 
+                ticket=ticket, 
+                published=get_published(), 
+                status=get_status(), 
+                complexities=get_complexity(), 
+                comp1=get_complexity_1(), 
+                comp2=get_complexity_2(), 
+                comp3=get_complexity_3(), 
+                effort=get_effort())
 
-    return render_template('edit.html', ticket=ticket, published=get_published(), status=get_status(), complexities=get_complexity(), effort=get_effort())
+    return render_template('edit.html', 
+        ticket=ticket, 
+        published=get_published(), 
+        status=get_status(), 
+        complexities=get_complexity(), 
+        comp1=get_complexity_1(), 
+        comp2=get_complexity_2(), 
+        comp3=get_complexity_3(), 
+        effort=get_effort())
 
 @app.route('/busca', methods=('GET', 'POST'))
 def busca():
@@ -383,9 +399,25 @@ def nedit(number):
                 request.form['jira'],
                 request.form['hours'])
             ticket = get_ticket(id)
-            return render_template('edit.html', ticket=ticket, published=get_published(), status=get_status(), complexities=get_complexity(), effort=get_effort())
+            return render_template('edit.html', 
+                ticket=ticket, 
+                published=get_published(), 
+                status=get_status(), 
+                complexities=get_complexity(), 
+                comp1=get_complexity_1(), 
+                comp2=get_complexity_2(), 
+                comp3=get_complexity_3(), 
+                effort=get_effort())
 
-    return render_template('edit.html', ticket=ticket, published=get_published(), status=get_status(), complexities=get_complexity(), effort=get_effort())
+    return render_template('edit.html', 
+        ticket=ticket, 
+        published=get_published(), 
+        status=get_status(), 
+        complexities=get_complexity(), 
+        comp1=get_complexity_1(), 
+        comp2=get_complexity_2(), 
+        comp3=get_complexity_3(), 
+        effort=get_effort())
 
 def sedit(
     id,
@@ -720,6 +752,36 @@ def get_complexity():
     regs.append({ "id":  9, "complexity": 23, "hours": 46, "days": 65 }) 
     regs.append({ "id": 10, "complexity": 29, "hours": 58, "days": 70 }) 
     regs.append({ "id": 11, "complexity": 31, "hours": 62, "days": 75 }) 
+    regs.append({ "id": 12, "complexity": 37, "hours": 74, "days": 80 }) 
+    regs.append({ "id": 13, "complexity": 41, "hours": 82, "days": 85 }) 
+    regs.append({ "id": 14, "complexity": 43, "hours": 86, "days": 90 }) 
+    regs.append({ "id": 15, "complexity": 47, "hours": 94, "days": 95 }) 
+    regs.append({ "id": 16, "complexity": 53, "hours": 106, "days": 100 }) 
+    regs.append({ "id": 17, "complexity": 59, "hours": 118, "days": 105 }) 
+    return regs
+
+def get_complexity_1():
+    regs = []
+    regs.append({ "id":  0, "complexity": .5, "hours": 1,  "days": 5 }) 
+    regs.append({ "id":  1, "complexity": 1,  "hours": 2,  "days": 10 }) 
+    regs.append({ "id":  2, "complexity": 2,  "hours": 4,  "days": 15 }) 
+    regs.append({ "id":  3, "complexity": 3,  "hours": 6,  "days": 20 }) 
+    regs.append({ "id":  4, "complexity": 4,  "hours": 8,  "days": 22 }) 
+    regs.append({ "id":  5, "complexity": 5,  "hours": 10, "days": 25 }) 
+    return regs
+
+def get_complexity_2():
+    regs = []
+    regs.append({ "id":  6, "complexity": 8,  "hours": 16, "days": 40 }) 
+    regs.append({ "id":  7, "complexity": 13, "hours": 26, "days": 50 }) 
+    regs.append({ "id":  8, "complexity": 21, "hours": 42, "days": 60 }) 
+    regs.append({ "id":  9, "complexity": 23, "hours": 46, "days": 65 }) 
+    regs.append({ "id": 10, "complexity": 29, "hours": 58, "days": 70 }) 
+    regs.append({ "id": 11, "complexity": 31, "hours": 62, "days": 75 }) 
+    return regs
+
+def get_complexity_3():
+    regs = []
     regs.append({ "id": 12, "complexity": 37, "hours": 74, "days": 80 }) 
     regs.append({ "id": 13, "complexity": 41, "hours": 82, "days": 85 }) 
     regs.append({ "id": 14, "complexity": 43, "hours": 86, "days": 90 }) 
